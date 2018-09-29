@@ -2,6 +2,7 @@
 
 namespace App\Services\Analysis;
 
+use App\Services\Analysis\Search\FilmService;
 use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 use Google\Protobuf\Internal\RepeatedField;
 
@@ -25,6 +26,20 @@ class ImageAnalysisService
      * string
      */
     private $imageResource;
+
+    /**
+     * @var FilmService
+     */
+    private $filmService;
+
+    /**
+     * ImageAnalysisService constructor.
+     * @param FilmService $filmService
+     */
+    public function __construct(FilmService $filmService)
+    {
+        $this->filmService = $filmService;
+    }
 
     /**
      * @param string $path
@@ -70,7 +85,7 @@ class ImageAnalysisService
             if ($key === $index) {
                 break;
             }
-            return $entity->getDescription();
+            $film = $this->filmService->find($entity->getDescription());
         }
         return null;
     }
