@@ -8,5 +8,8 @@ namespace App\Repositories;
  */
 class ResultRepository
 {
+    public function saveFilm(array $film)
+    {
 
+    }
 }

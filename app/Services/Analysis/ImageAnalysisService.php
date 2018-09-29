@@ -13,16 +13,6 @@ use Google\Protobuf\Internal\RepeatedField;
 class ImageAnalysisService
 {
     /**
-     * @var string
-     */
-    const FILM = 'Film';
-
-    /**
-     * @var string
-     */
-    const TV = 'Television';
-
-    /**
      * string
      */
     private $imageResource;
@@ -67,7 +57,9 @@ class ImageAnalysisService
     }
 
     /**
-     * @param RepeatedField $entities
+     * @param $entities
+     * @return null
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function identifyEntity($entities)
     {
