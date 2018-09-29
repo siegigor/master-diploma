@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UploadImageRequest;
+use App\Services\Analysis\ImageAnalysisService;
 use App\Services\UploadImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use phpDocumentor\Reflection\File;
 
 /**
  * Class HomeController
@@ -19,12 +21,19 @@ class HomeController extends Controller
     private $uploadService;
 
     /**
+     * @var ImageAnalysisService
+     */
+    private $analysisService;
+
+    /**
      * HomeController constructor.
      * @param UploadImageService $uploadService
+     * @param ImageAnalysisService $analysisService
      */
-    public function __construct(UploadImageService $uploadService)
+    public function __construct(UploadImageService $uploadService, ImageAnalysisService $analysisService)
     {
         $this->uploadService = $uploadService;
+        $this->analysisService = $analysisService;
     }
 
     /**
@@ -48,6 +57,6 @@ class HomeController extends Controller
         ]);
 
         $path = $this->uploadService->upload($request);
-        return $path;
+        echo $this->analysisService->analyzeImage($path);
     }
 }

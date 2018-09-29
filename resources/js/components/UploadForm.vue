@@ -42,7 +42,6 @@
         },
         methods: {
             find() {
-                console.log(new FormData(this.$refs.form));
                 axios({
                     method: 'POST',
                     url: this.action,
