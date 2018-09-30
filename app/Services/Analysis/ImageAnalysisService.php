@@ -4,6 +4,7 @@ namespace App\Services\Analysis;
 
 use App\Models\Result;
 use App\Services\Analysis\Search\FilmService;
+use App\Services\Analysis\Search\TvService;
 use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 use Google\Protobuf\Internal\RepeatedField;
 
@@ -24,6 +25,11 @@ class ImageAnalysisService
     private $filmService;
 
     /**
+     * @var TvService
+     */
+    private $tvService;
+
+    /**
      * @var string
      */
     private $path;
@@ -31,10 +37,12 @@ class ImageAnalysisService
     /**
      * ImageAnalysisService constructor.
      * @param FilmService $filmService
+     * @param TvService $tvService
      */
-    public function __construct(FilmService $filmService)
+    public function __construct(FilmService $filmService, TvService $tvService)
     {
         $this->filmService = $filmService;
+        $this->tvService = $tvService;
     }
 
     /**
@@ -107,7 +115,7 @@ class ImageAnalysisService
             if ($this->isTypeFilm($type)) {
                 $entity = $this->filmService->find($entity->getDescription(), $this->path);
             } elseif ($this->isTypeTv($type)) {
-                $entity = null;
+                $entity = $this->tvService->find($entity->getDescription(), $this->path);
             }
             if ($entity) {
                 return $entity;
