@@ -17,15 +17,15 @@ class AddFieldsToResult extends Migration
     public function up()
     {
         Schema::table('result', function (Blueprint $table) {
-            $table->string('rated');
-            $table->text('genre');
-            $table->string('runtime');
-            $table->string('director');
-            $table->text('writer');
-            $table->text('actors');
-            $table->string('language');
-            $table->string('country');
-            $table->string('awards');
+            $table->string('rated')->nullable();
+            $table->text('genre')->nullable();
+            $table->string('runtime')->nullable();
+            $table->string('director')->nullable();
+            $table->text('writer')->nullable();
+            $table->text('actors')->nullable();
+            $table->string('language')->nullable();
+            $table->string('country')->nullable();
+            $table->string('awards')->nullable();
         });
     }
 
