@@ -25,7 +25,7 @@ class TvService extends SearchService
     {
         $data = $this->client->request('GET', $this->getUrl($title))->getBody();
         $tv = json_decode($data, true);
-        if ($tv && isset($tv['Title'])) {
+        if ($tv && isset($tv['Title']) && $film['imdbRating'] !== self::NA) {
             if ($tv['Title'] === $title) {
                 return $this->serializeTv($tv, $image);
             }

@@ -25,7 +25,7 @@ class FilmService extends SearchService
     {
         $data = $this->client->request('GET', $this->getUrl($title))->getBody();
         $film = json_decode($data, true);
-        if ($film && isset($film['Title'])) {
+        if ($film && isset($film['Title']) && $film['imdbRating'] !== self::NA) {
             if ($film['Title'] === $title) {
                 return $this->serializeFilm($film, $image);
             }

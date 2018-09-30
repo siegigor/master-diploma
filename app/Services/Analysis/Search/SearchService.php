@@ -22,6 +22,11 @@ abstract class SearchService
     protected $apiKey;
 
     /**
+     * @var string
+     */
+    const NA = "N/A";
+
+    /**
      * FilmService constructor.
      * @param Client $client
      */
