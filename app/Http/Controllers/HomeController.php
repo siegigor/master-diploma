@@ -57,6 +57,6 @@ class HomeController extends Controller
         ]);
 
         $path = $this->uploadService->upload($request);
-        echo $this->analysisService->analyzeImage($path);
+        dd($this->analysisService->analyzeImage($path));
     }
 }

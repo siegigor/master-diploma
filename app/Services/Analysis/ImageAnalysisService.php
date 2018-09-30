@@ -2,6 +2,7 @@
 
 namespace App\Services\Analysis;
 
+use App\Models\Result;
 use App\Services\Analysis\Search\FilmService;
 use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 use Google\Protobuf\Internal\RepeatedField;
@@ -23,6 +24,11 @@ class ImageAnalysisService
     private $filmService;
 
     /**
+     * @var string
+     */
+    private $path;
+
+    /**
      * ImageAnalysisService constructor.
      * @param FilmService $filmService
      */
@@ -37,7 +43,8 @@ class ImageAnalysisService
      */
     public function setImageFullPath(string $path): void
     {
-        $this->imageResource = fopen('/var/www/public/' . $path, 'r');
+        $this->path = $path;
+        $this->imageResource = fopen('/var/www/public/' . $this->path, 'r');
     }
 
     /**
@@ -57,29 +64,56 @@ class ImageAnalysisService
     }
 
     /**
-     * @param $entities
-     * @return null
+     * @param RepeatedField $entities
+     * @return Result|array|null|object
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    private function identifyEntity($entities)
+    private function identifyEntity(RepeatedField $entities)
     {
         $type = null;
         $index = null;
         foreach ($entities as $key => $entity) {
             $description = $entity->getDescription();
             if ($this->isTypeFilm($description)) {
-                $type = self::FILM;
+                $type = Result::FILM;
+                $index = $key;
+                break;
+            } elseif ($this->isTypeTv($description)) {
+                $type = Result::TV;
                 $index = $key;
                 break;
             }
         }
+        return $this->getResult($entities, $type, $index);
+    }
+
+    /**
+     * @param RepeatedField $entities
+     * @param null|string $type
+     * @param int|null $index
+     * @return Result|array|null|object
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    private function getResult(RepeatedField $entities, ?string $type, ?int $index)
+    {
+        if (!$type && !$index) {
+            return $this->filmService->createNotFound($this->path);
+        }
+        $entity = null;
         foreach ($entities as $key => $entity) {
             if ($key === $index) {
                 break;
             }
-            $film = $this->filmService->find($entity->getDescription());
+            if ($this->isTypeFilm($type)) {
+                $entity = $this->filmService->find($entity->getDescription(), $this->path);
+            } elseif ($this->isTypeTv($type)) {
+                $entity = null;
+            }
+            if ($entity) {
+                return $entity;
+            }
         }
-        return null;
+        return $this->filmService->createNotFound($this->path);
     }
 
     /**
@@ -88,6 +122,15 @@ class ImageAnalysisService
      */
     private function isTypeFilm(string $type): bool
     {
-        return $type === self::FILM;
+        return Result::isTypeFilm($type);
+    }
+
+    /**
+     * @param string $type
+     * @return bool
+     */
+    private function isTypeTv(string $type): bool
+    {
+        return Result::isTypeTv($type);
     }
 }

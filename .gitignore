@@ -16,3 +16,4 @@ yarn-error.log
 /public/build
 /public/images
 /storage/docker
+google_cloud_vision.json
