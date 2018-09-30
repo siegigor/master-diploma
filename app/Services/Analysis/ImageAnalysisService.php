@@ -78,8 +78,8 @@ class ImageAnalysisService
      */
     private function identifyEntity(RepeatedField $entities): ?Result
     {
-        $type = null;
-        $index = null;
+        $type = Result::FILM;
+        $index = 2;
         foreach ($entities as $key => $entity) {
             $description = $entity->getDescription();
             if ($this->isTypeFilm($description)) {
@@ -104,9 +104,6 @@ class ImageAnalysisService
      */
     private function getResult(RepeatedField $entities, ?string $type, ?int $index): ?Result
     {
-        if (!$type && !$index) {
-            return $this->filmService->createNotFound($this->path);
-        }
         $entity = null;
         foreach ($entities as $key => $entity) {
             if ($key === $index) {
