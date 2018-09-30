@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: igor
- * Date: 30.09.18
- * Time: 12:30
- */
 
 namespace App\Services\Analysis\Search;
 

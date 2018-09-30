@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Find movies and tv shows by image</div>
 
                 <div class="card-body">
                     <upload-form

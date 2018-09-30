@@ -50,7 +50,7 @@ class TvService extends SearchService
             'release_date' => $tv['first_air_date'],
             'video' => $tv['video'] ?? ''
         ]);
-        $result->setFilmStatus();
+        $result->setTvStatus();
         if (!$result->save()) {
             return null;
         }

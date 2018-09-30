@@ -13,3 +13,4 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::post('/upload', 'HomeController@upload')->name('upload');
+Route::get('show/{result}', 'ShowController@show')->name('show');

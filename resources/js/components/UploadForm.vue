@@ -48,7 +48,7 @@
                     data: new FormData(this.$refs.form)
                 })
                     .then(response => {
-                        console.log(response);
+                        window.location.href = response;
                     })
                     .catch(response => {
                         alert('Something went wrong');

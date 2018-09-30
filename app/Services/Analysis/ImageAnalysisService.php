@@ -73,10 +73,10 @@ class ImageAnalysisService
 
     /**
      * @param RepeatedField $entities
-     * @return Result|array|null|object
+     * @return Result|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    private function identifyEntity(RepeatedField $entities)
+    private function identifyEntity(RepeatedField $entities): ?Result
     {
         $type = null;
         $index = null;
@@ -99,10 +99,10 @@ class ImageAnalysisService
      * @param RepeatedField $entities
      * @param null|string $type
      * @param int|null $index
-     * @return Result|array|null|object
+     * @return Result|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    private function getResult(RepeatedField $entities, ?string $type, ?int $index)
+    private function getResult(RepeatedField $entities, ?string $type, ?int $index): ?Result
     {
         if (!$type && !$index) {
             return $this->filmService->createNotFound($this->path);
