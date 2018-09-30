@@ -5,6 +5,8 @@
 // Variables
 @import 'variables';
 
+@import "~font-awesome/scss/font-awesome.scss";
+
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
@@ -15,4 +17,20 @@
 .img {
     width:100%;
     max-width: 200px;
+}
+#spinner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2);
+    z-index: 99999999;
+    text-align: center;
+    color: #fff;
+    font-size: 70px;
+    display: none;
+    i {
+        margin-top: 22%;
+    }
 }

@@ -78,6 +78,7 @@ class ImageAnalysisService
      */
     private function identifyEntity(RepeatedField $entities): ?Result
     {
+        dd($entities);
         $type = null;
         $index = null;
         foreach ($entities as $key => $entity) {

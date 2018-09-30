@@ -16,4 +16,7 @@
         </div>
     </div>
 </div>
+<div id="spinner">
+    <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+</div>
 @endsection

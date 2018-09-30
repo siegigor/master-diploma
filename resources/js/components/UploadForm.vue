@@ -42,15 +42,18 @@
         },
         methods: {
             find() {
+                $('#spinner').show();
                 axios({
                     method: 'POST',
                     url: this.action,
                     data: new FormData(this.$refs.form)
                 })
                     .then(response => {
-                        window.location.href = response;
+                        window.location.href = response.data;
+                        $('#spinner').hide();
                     })
                     .catch(response => {
+                        $('#spinner').hide();
                         alert('Something went wrong');
                     })
             },

@@ -40,9 +40,12 @@
                                     </div>
                                     @else
                                         <div class="alert alert-danger" role="alert">
-                                            Sory, we can't identify this image. Maybe it's not a movie or Tv show.
+                                            Sory, we can't identify this image. Maybe it's not a movie or TV show.
                                         </div>
                                     @endif
+                                    <div class="col-md-12 text-right">
+                                        <a class="btn btn-primary" href="{{ route('home') }}">Find another</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
