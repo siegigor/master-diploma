@@ -13,7 +13,7 @@ class FilmService extends SearchService
     /**
      * @var string
      */
-    protected $url = "https://api.themoviedb.org/3/search/movie";
+    protected $url = "http://www.omdbapi.com?type=movie";
 
     /**
      * @param string $title
@@ -24,9 +24,9 @@ class FilmService extends SearchService
     public function find(string $title, string $image): ?Result
     {
         $data = $this->client->request('GET', $this->getUrl($title))->getBody();
-        $data = json_decode($data, true);
-        if ($data && ($film = $data['results'][0] ?? null)) {
-            if ($film['title'] === $title) {
+        $film = json_decode($data, true);
+        if ($film && isset($film['Title'])) {
+            if ($film['Title'] === $title) {
                 return $this->serializeFilm($film, $image);
             }
         }
@@ -43,12 +43,20 @@ class FilmService extends SearchService
         /** @var Result $result */
         $result = Result::make([
             'image' => $image,
-            'title' => $film['title'],
-            'vote_average' => $film['vote_average'],
-            'poster' => $film['poster_path'],
-            'description' => $film['overview'],
-            'release_date' => $film['release_date'],
-            'video' => $film['video']
+            'title' => $film['Title'],
+            'vote_average' => $film['imdbRating'],
+            'poster' => $film['Poster'],
+            'description' => $film['Plot'],
+            'release_date' => $film['Released'],
+            'rated' => $film['Rated'],
+            'runtime' => $film['Runtime'],
+            'genre' => $film['Genre'],
+            'director' => $film['Director'],
+            'writer' => $film['Writer'],
+            'actors' => $film['Actors'],
+            'language' => $film['Language'],
+            'country' => $film['Country'],
+            'awards' => $film['Awards'],
         ]);
         $result->setFilmStatus();
         if (!$result->save()) {

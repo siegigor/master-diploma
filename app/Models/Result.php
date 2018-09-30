@@ -99,12 +99,4 @@ class Result extends Model
     {
         return  $this->status === self::NOT_FOUND;
     }
-
-    /**
-     * @return string
-     */
-    public function getPosterPathAttribute(): string
-    {
-        return 'https://image.tmdb.org/t/p/original' . $this->poster;
-    }
 }

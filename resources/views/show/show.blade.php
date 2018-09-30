@@ -28,14 +28,23 @@
                                 <div class="row">
                                     @if (!$result->isNotFound())
                                     <div class="col-md-3">
-                                        <img src="{{ asset($result->poster_path) }}" class="img">
+                                        <img src="{{ asset($result->poster) }}" class="img">
                                     </div>
                                     <div class="col-md-9">
                                         <h5 class="card-title">{{ $result->title }}</h5>
                                         <p class="card-text">{{ $result->description }}</p>
                                         <ul>
+                                            <li><b>Rated: </b>{{ $result->rated }}</li>
+                                            <li><b>Runtime: </b>{{ $result->runtime }}</li>
+                                            <li><b>Genre: </b>{{ $result->genre }}</li>
+                                            <li><b>Director: </b>{{ $result->director }}</li>
+                                            <li><b>Writer: </b>{{ $result->writer }}</li>
+                                            <li><b>Actors: </b>{{ $result->actors }}</li>
+                                            <li><b>Language: </b>{{ $result->language }}</li>
+                                            <li><b>Country: </b>{{ $result->country }}</li>
                                             <li><b>Rating: </b>{{ $result->vote_average }} / 10</li>
                                             <li><b>Release date: </b>{{ $result->release_date }}</li>
+                                            <li><b>Awards: </b>{{ $result->awards }}</li>
                                         </ul>
                                     </div>
                                     @else

@@ -13,7 +13,7 @@ class TvService extends SearchService
     /**
      * @var string
      */
-    protected $url = "https://api.themoviedb.org/3/search/tv";
+    protected $url = "http://www.omdbapi.com?type=series";
 
     /**
      * @param string $title
@@ -24,9 +24,9 @@ class TvService extends SearchService
     public function find(string $title, string $image): ?Result
     {
         $data = $this->client->request('GET', $this->getUrl($title))->getBody();
-        $data = json_decode($data, true);
-        if ($data && $tv = ($data['results'][0] ?? null)) {
-            if ($tv['name'] === $title) {
+        $tv = json_decode($data, true);
+        if ($tv && isset($tv['Title'])) {
+            if ($tv['Title'] === $title) {
                 return $this->serializeTv($tv, $image);
             }
         }
@@ -43,12 +43,20 @@ class TvService extends SearchService
         /** @var Result $result */
         $result = Result::make([
             'image' => $image,
-            'title' => $tv['name'],
-            'vote_average' => $tv['vote_average'],
-            'poster' => $tv['poster_path'],
-            'description' => $tv['overview'],
-            'release_date' => $tv['first_air_date'],
-            'video' => $tv['video'] ?? ''
+            'title' => $tv['Title'],
+            'vote_average' => $tv['imdbRating'],
+            'poster' => $tv['Poster'],
+            'description' => $tv['Plot'],
+            'release_date' => $tv['Released'],
+            'rated' => $tv['Rated'],
+            'runtime' => $tv['Runtime'],
+            'genre' => $tv['Genre'],
+            'director' => $tv['Director'],
+            'writer' => $tv['Writer'],
+            'actors' => $tv['Actors'],
+            'language' => $tv['Language'],
+            'country' => $tv['Country'],
+            'awards' => $tv['Awards'],
         ]);
         $result->setTvStatus();
         if (!$result->save()) {

@@ -38,10 +38,10 @@ abstract class SearchService
     public function getUrl(string $name): string
     {
         $params = [
-            'api_key' => $this->apiKey,
-            'query' => $name
+            'apikey' => $this->apiKey,
+            't' => $name
         ];
-        return $this->url . '?' . urldecode(http_build_query($params));
+        return $this->url . '&' . urldecode(http_build_query($params));
     }
 
     /**
